@@ -2,20 +2,18 @@
 const getComputerChoice = function () {
   const choices = ["Rock", "Paper", "Scissor"];
 
-  return choices[Math.floor(Math.random() * choices.length)].toLowerCase();
+  const aChoice =
+    choices[Math.floor(Math.random() * choices.length)].toLowerCase();
+  const slicedAChoice = aChoice.slice(1);
+  return aChoice[0].toUpperCase() + slicedAChoice;
 };
 
 // For comparing the The selection of the player vs. computer Selection
 function playRound(playerSelection, computerSelection) {
   const lowerPlayerSelection = playerSelection.toLowerCase();
-  const slicedChoicePlayer = lowerPlayerSelection.slice(1);
-  const slicedChoiceComputer = computerSelection.slice(1);
-  const choiceCapitalizePlayer =
-    lowerPlayerSelection[0].toUpperCase() + slicedChoicePlayer;
-  const choiceCapitalizeComputer =
-    computerSelection[0].toUpperCase() + slicedChoiceComputer;
+  const lowerComputerSelection = computerSelection.toLowerCase();
 
-  if (lowerPlayerSelection === computerSelection) {
+  if (lowerPlayerSelection === lowerComputerSelection) {
     return `It's a Tie!`;
   }
 
@@ -33,30 +31,42 @@ function playRound(playerSelection, computerSelection) {
   // 3. Scissor - Scissor -> Tie
 
   // For paper
-  if (lowerPlayerSelection === "paper" && computerSelection === "scissor") {
-    return `You Lose! ${choiceCapitalizeComputer} beats ${choiceCapitalizePlayer}`;
-  } else if (lowerPlayerSelection === "paper" && computerSelection === "rock") {
-    return `You Win! ${choiceCapitalizePlayer} beats ${choiceCapitalizeComputer}`;
+  if (
+    lowerPlayerSelection === "paper" &&
+    lowerComputerSelection === "scissor"
+  ) {
+    return `Computer`;
+  } else if (
+    lowerPlayerSelection === "paper" &&
+    lowerComputerSelection === "rock"
+  ) {
+    return `Player`;
   }
 
   // For Rock
-  else if (lowerPlayerSelection === "rock" && computerSelection === "scissor") {
-    return `You Win! ${choiceCapitalizePlayer} beats ${choiceCapitalizeComputer}`;
-  } else if (lowerPlayerSelection === "rock" && computerSelection === "paper") {
-    return `You Lose! ${choiceCapitalizeComputer} beats ${choiceCapitalizePlayer}`;
+  else if (
+    lowerPlayerSelection === "rock" &&
+    lowerComputerSelection === "scissor"
+  ) {
+    return `You`;
+  } else if (
+    lowerPlayerSelection === "rock" &&
+    lowerComputerSelection === "paper"
+  ) {
+    return `Computer`;
   }
 
   // For Scissor
   else if (
     lowerPlayerSelection === "scissor" &&
-    computerSelection === "paper"
+    lowerComputerSelection === "paper"
   ) {
-    return `You Win! ${choiceCapitalizePlayer} beats ${choiceCapitalizeComputer}`;
+    return `You`;
   } else if (
     lowerPlayerSelection === "scissor" &&
-    computerSelection === "rock"
+    lowerComputerSelection === "rock"
   ) {
-    return `You Lose! ${choiceCapitalizeComputer} beats ${choiceCapitalizePlayer}`;
+    return `Computer`;
   }
 
   // if (lowerPlayerSelection !== computerSelection) {
@@ -68,9 +78,9 @@ function playRound(playerSelection, computerSelection) {
   // }
 }
 
-const playerSelection = "scissor";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+// const playerSelection = "scissor";
+// const computerSelection = getComputerChoice();
+// console.log(playRound(playerSelection, computerSelection));
 
 /* TO DO*/
 // For 5 round game
@@ -78,16 +88,25 @@ const game = function () {
   let playerPrompt;
   let playerChoice;
   let computerChoice;
+  let roundWinner;
+
+  // For keeping count, who won how many times
+  let winCountPlayer = 0;
+  let winCountComputer = 0;
+
+  // For playing for 5 rounds
   for (let i = 1; i <= 5; i++) {
     console.log(`Round ${i}`);
 
-    playerPrompt = Number(prompt(`Choose: \n 1.Rock \n 2.Paper \n 3.Scissor`));
+    playerPrompt = Number(
+      prompt(`Choose: \n 1. Rock \n 2. Paper \n 3. Scissor`)
+    );
     if (playerPrompt === 1) {
-      playerChoice = "rock";
+      playerChoice = "Rock";
     } else if (playerPrompt === 2) {
-      playerChoice = "paper";
+      playerChoice = "Paper";
     } else if (playerPrompt === 3) {
-      playerChoice = "scissor";
+      playerChoice = "Scissor";
     }
 
     console.log(`You Chose: ${playerChoice}`);
@@ -96,8 +115,28 @@ const game = function () {
 
     console.log(`The Computer Chose: ${computerChoice}`);
 
-    console.log(`The Winner for Round 1`);
+    roundWinner = playRound(playerChoice, computerChoice);
+
+    // Checking winner of the round
+    if (roundWinner === "You") {
+      console.log(`The Round ${i} Winner is : ${roundWinner}`);
+      winCountPlayer++;
+    } else {
+      console.log(`The Round ${i} Winner is : ${roundWinner}`);
+      winCountComputer++;
+    }
   }
 
-  playRound(playerChoice, computerChoice);
+  // Checking the winner of the game
+  if (winCountComputer > winCountPlayer) {
+    console.log(`Total Computer Wins: ${winCountComputer}`);
+    console.log(`Total Your Wins: ${winCountPlayer}`);
+    return `You Lost!`;
+  } else {
+    console.log(`Total Computer Wins: ${winCountComputer}`);
+    console.log(`Total Your Wins: ${winCountPlayer}`);
+    return `You Win!`;
+  }
 };
+
+console.log(game());
