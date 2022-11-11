@@ -40,7 +40,7 @@ function playRound(playerSelection, computerSelection) {
     lowerPlayerSelection === "paper" &&
     lowerComputerSelection === "rock"
   ) {
-    return `Player`;
+    return `You`;
   }
 
   // For Rock
@@ -121,9 +121,11 @@ const game = function () {
     if (roundWinner === "You") {
       console.log(`The Round ${i} Winner is : ${roundWinner}`);
       winCountPlayer++;
-    } else {
+    } else if (roundWinner === "Computer") {
       console.log(`The Round ${i} Winner is : ${roundWinner}`);
       winCountComputer++;
+    } else if (roundWinner === "It's a Tie!") {
+      console.log(`Tie! Give it a next chance!`);
     }
   }
 
@@ -132,10 +134,12 @@ const game = function () {
     console.log(`Total Computer Wins: ${winCountComputer}`);
     console.log(`Total Your Wins: ${winCountPlayer}`);
     return `You Lost!`;
-  } else {
+  } else if (winCountComputer < winCountPlayer) {
     console.log(`Total Computer Wins: ${winCountComputer}`);
     console.log(`Total Your Wins: ${winCountPlayer}`);
     return `You Win!`;
+  } else {
+    return `The game is a TIE!`;
   }
 };
 
