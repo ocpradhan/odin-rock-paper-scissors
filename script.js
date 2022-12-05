@@ -1,3 +1,8 @@
+// Targeting an element
+const btnRock = document.querySelector(".btn-rock");
+const btnPaper = document.querySelector(".btn-paper");
+const btnScissor = document.querySelector(".btn-scissor");
+
 // For Randomnly returning Rock, Paper and Scissor.
 const getComputerChoice = function () {
   const choices = ["Rock", "Paper", "Scissor"];
@@ -16,19 +21,6 @@ function playRound(playerSelection, computerSelection) {
   if (lowerPlayerSelection === lowerComputerSelection) {
     return `It's a Tie!`;
   }
-
-  // Combinations
-  // 1. Paper - Scissor -> Lose
-  // 2. Paper - Rock -> Win
-  // 3. Paper - Paper -> Tie
-
-  // 1. Rock - Scissor -> Win
-  // 2. Rock - Paper -> Lose
-  // 3. Rock - Rock -> Tie
-
-  // 1. Scissor - Rock -> Lose
-  // 2. Scissor - Paper -> Win
-  // 3. Scissor - Scissor -> Tie
 
   // For paper
   if (
@@ -68,16 +60,11 @@ function playRound(playerSelection, computerSelection) {
   ) {
     return `Computer`;
   }
-
-  // if (lowerPlayerSelection !== computerSelection) {
-  //   if (computerSelection === "paper") {
-  //     return `You Lose! ${computerSelection} beats ${lowerPlayerSelection}`;
-  //   } else if (computerSelection === "scissor") {
-  //     return `You Win! ${lowerPlayerSelection} beats ${computerSelection}`;
-  //   }
-  // }
 }
-
+let computerChoice = getComputerChoice();
+btnRock.addEventListener("click", playRound("rock", computerChoice));
+btnPaper.addEventListener("click", playRound("paper", computerChoice));
+btnScissor.addEventListener("click", playRound("scissor", computerChoice));
 // const playerSelection = "scissor";
 // const computerSelection = getComputerChoice();
 // console.log(playRound(playerSelection, computerSelection));
@@ -94,40 +81,42 @@ const game = function () {
   let winCountPlayer = 0;
   let winCountComputer = 0;
 
+  computerChoice = getComputerChoice();
+
   // For playing for 5 rounds
-  for (let i = 1; i <= 5; i++) {
-    console.log(`Round ${i}`);
+  // for (let i = 1; i <= 5; i++) {
+  //   console.log(`Round ${i}`);
 
-    playerPrompt = Number(
-      prompt(`Choose: \n 1. Rock \n 2. Paper \n 3. Scissor`)
-    );
-    if (playerPrompt === 1) {
-      playerChoice = "Rock";
-    } else if (playerPrompt === 2) {
-      playerChoice = "Paper";
-    } else if (playerPrompt === 3) {
-      playerChoice = "Scissor";
-    }
+  //   playerPrompt = Number(
+  //     prompt(`Choose: \n 1. Rock \n 2. Paper \n 3. Scissor`)
+  //   );
+  //   if (playerPrompt === 1) {
+  //     playerChoice = "Rock";
+  //   } else if (playerPrompt === 2) {
+  //     playerChoice = "Paper";
+  //   } else if (playerPrompt === 3) {
+  //     playerChoice = "Scissor";
+  //   }
 
-    console.log(`You Chose: ${playerChoice}`);
+  //   console.log(`You Chose: ${playerChoice}`);
 
-    computerChoice = getComputerChoice();
+  //   computerChoice = getComputerChoice();
 
-    console.log(`The Computer Chose: ${computerChoice}`);
+  //   console.log(`The Computer Chose: ${computerChoice}`);
 
-    roundWinner = playRound(playerChoice, computerChoice);
+  //   roundWinner = playRound(playerChoice, computerChoice);
 
-    // Checking winner of the round
-    if (roundWinner === "You") {
-      console.log(`The Round ${i} Winner is : ${roundWinner}`);
-      winCountPlayer++;
-    } else if (roundWinner === "Computer") {
-      console.log(`The Round ${i} Winner is : ${roundWinner}`);
-      winCountComputer++;
-    } else if (roundWinner === "It's a Tie!") {
-      console.log(`Tie! Give it a next chance!`);
-    }
-  }
+  //   // Checking winner of the round
+  //   if (roundWinner === "You") {
+  //     console.log(`The Round ${i} Winner is : ${roundWinner}`);
+  //     winCountPlayer++;
+  //   } else if (roundWinner === "Computer") {
+  //     console.log(`The Round ${i} Winner is : ${roundWinner}`);
+  //     winCountComputer++;
+  //   } else if (roundWinner === "It's a Tie!") {
+  //     console.log(`Tie! Give it a next chance!`);
+  //   }
+  // }
 
   // Checking the winner of the game
   if (winCountComputer > winCountPlayer) {
@@ -143,4 +132,4 @@ const game = function () {
   }
 };
 
-// console.log(game());
+console.log(game());
